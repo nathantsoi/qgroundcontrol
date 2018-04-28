@@ -35,17 +35,34 @@ QGroundControl builds are supported for OSX, Linux, Windows, iOS and Android. QG
 
 ###### Install QT
 You **need to install Qt as described below** instead of using pre-built packages from say, a Linux distribution, because QGroundControl needs access to private Qt headers.
-* Download the [Qt installer](http://www.qt.io/download-open-source)
+* Download the [v5.9.3 Offline Qt installer](https://download.qt.io/official_releases/qt/5.9/5.9.3/)
     * Make sure to install Qt version **5.9.3**. You will also need to install the Qt Speech package.
     * Ubuntu: Set the downloaded file to executable using:`chmod +x`. Install to default location for use with ./qgroundcontrol-start.sh. If you install Qt to a non-default location you will need to modify qgroundcontrol-start.sh in order to run downloaded builds.
+      * Install `qtlocation` from source for the required private packages:
+```
+wget https://download.qt.io/official_releases/qt/5.9/5.9.3/submodules/qtlocation-opensource-src-5.9.3.tar.xz
+tar -xf qtlocation-opensource-src-5.9.3.tar.xz
+cd tar -xf qtlocation-opensource-src-5.9.3
+qmake
+make
+sudo make install
+```
     * Windows: Make sure to install VS 2015 32 bit package.
 
 ###### Install additional packages:
 * Ubuntu: sudo apt-get install speech-dispatcher libudev-dev libsdl2-dev
+  * Install QT dependencies: `sudo apt install -y qtlocation5-dev qtpositioning5-dev libqt5svg5-dev libqt5texttospeech5-dev qtmultimedia5-dev libqt5serialport5-dev libqt5charts5-dev`
 * Fedora: sudo dnf install speech-dispatcher SDL2-devel SDL2 systemd-devel
 * Arch Linux: pacman -Sy speech-dispatcher
 * Windows: [USB Driver](http://www.pixhawk.org/firmware/downloads) to connect to Pixhawk/PX4Flow/3DR Radio
 * Android: [Qt Android Setup](http://doc.qt.io/qt-5/androidgs.html)
+
+###### Building on the command line
+* In a terminal, run `mkdir build; cd build; qmake ../qgroundcontrol.pro`
+* Then build with `-j` set to the number of cores you wish to use, e.g. for 8 cores:
+```
+make -j 8
+```
 
 ###### Building using Qt Creator
 
